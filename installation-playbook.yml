@@ -1,0 +1,19 @@
+---
+
+- hosts: all   # apply on all hosts found in inventory
+  become: true  # sudo
+  tasks: 
+  
+  - name: update the system   # task desc
+    apt:  # task module
+      update_cache: true
+
+  - name: install apache2
+    apt:
+      name: apache2
+      state: latest
+      
+  - name: remove apache2
+    apt:
+      name: apache2
+      state: absent
