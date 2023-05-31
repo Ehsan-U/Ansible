@@ -5,7 +5,8 @@
   tasks:
   
   - name: update centos nodes
-    yum: 
+    yum:
+      # update_only will upgrade the installed packages on centos, equal to apt dist-upgrade
       update_only: true
       update_cache: true
     when: ansible_distribution == "CentOS"
