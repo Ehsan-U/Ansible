@@ -1,0 +1,9 @@
+[web_servers]
+node1@192.168.122.20
+node2@192.168.122.30
+
+[db_servers]
+root@192.168.122.40
+
+[workstation]
+workstation@192.168.122.10
