@@ -1,19 +1,14 @@
 ---
 
-- hosts: all   # apply on all hosts found in inventory
-  become: true  # sudo
+- hosts: all
+  become: true 
   tasks: 
   
-  - name: update the system   # task desc
-    apt:  # task module
-      update_cache: true
+  - name: install apache and php
+    # package is module that automatically detect underlying host package-manager
+    package:
+      name: # variables are defined in inventory
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+    update_cache: true
 
-  - name: install apache2
-    apt:
-      name: apache2
-      state: latest
-      
-  - name: remove apache2
-    apt:
-      name: apache2
-      state: absent

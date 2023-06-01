@@ -1,0 +1,39 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update ubuntu
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: true
+    when: ansible_distribution == "Ubuntu"
+
+  - name: update centos
+    tags: always
+    yum:
+      update_only: true
+      update_cache: true
+    when: ansible_distribution == "CentOS"
+  
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: install apache on ubuntu
+    tags: apache,ubuntu
+    apt:
+      name: apache2
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache on centos
+    tags: apache,centos
+    yum:
+      name: httpd
+      state: latest
+    when: ansible_distribution == "CentOS"
+
