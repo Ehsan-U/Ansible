@@ -1,0 +1,34 @@
+---
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: copy file to target servers
+    copy:
+      # for src, ansible looks files/ for possible files
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+
+
+- hosts: workstation
+  become: true
+  tasks:
+
+  - name: install unzip
+    package:
+      name: unzip
+
+  - name: install terraform
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip
+      dest: /usr/local/bin
+      # indicate file not available locally on the ansible controller (machine running ansible)
+      # src is remote, so need to download from there
+      remote_src: true
+      owner: root
+      group: root
+      mode: 0755
