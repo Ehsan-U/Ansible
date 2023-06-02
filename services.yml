@@ -25,5 +25,4 @@
       name: httpd
       state: restarted
     # change will only be register in the variable when above task will execute
-
     when: httpdvar.changed
