@@ -1,0 +1,28 @@
+---
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: start apache on CentOS
+    service:
+      name: httpd
+      state: started
+      enabled: true
+    when: ansible_distribution == "CentOS"
+
+  - name: change admin email in httpd config
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin example@example.com
+    when: ansible_distribution == "CentOS"
+    # its a variable, name can be anything
+    register: httpdvar
+  
+  - name: restart httpd in case of change
+    service:
+      name: httpd
+      state: restarted
+    # variable will only be changed when above task will execute
+    when: httpdvar.changed
