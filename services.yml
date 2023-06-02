@@ -24,5 +24,5 @@
     service:
       name: httpd
       state: restarted
-    # change will only be register in the variable when above task will execute
+    # change will only be register in the variable when previous task will execute
     when: httpdvar.changed
