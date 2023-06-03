@@ -1,0 +1,36 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update the system ( CentOS )
+    yum:
+      update_only: true
+      update_cache: true
+    when: ansible_distribution == "CentOS"
+
+  - name: update the system ( Ubuntu )
+    apt:
+      upgrade: dist
+      update_cache: true
+    when: ansible_distribution == "Ubuntu"
+
+  - name: creating user for ansible
+    user:
+      name: simone
+      group: root
+
+  # this section can be skipped if you already have key on the remote servers
+  - name: adding key for ansible user
+    authorized_key:
+      user: simone
+      key: "ssh public key"
+
+  - name: add simone to sudeors file
+    copy:
+      src: simone_file
+      dest: /etc/sudoers.d/simone
+      owner: root
+      group: root
+      mode: 0440
