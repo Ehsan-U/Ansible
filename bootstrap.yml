@@ -28,7 +28,8 @@
     authorized_key:
       user: simone
       key: "ssh public key"
-
+  
+  # by adding simone to sudoers, it can bypass the sudo password prompt
   - name: add simone to sudeors file
     copy:
       src: simone_file
