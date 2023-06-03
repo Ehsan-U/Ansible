@@ -1,3 +1,5 @@
+# bootstrap file often is separate file that is used to setup ansible configs on a new server
+
 ---
 
 - hosts: all
@@ -34,3 +36,5 @@
       owner: root
       group: root
       mode: 0440
+
+
