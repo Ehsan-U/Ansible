@@ -30,6 +30,7 @@
       key: "ssh public key"
   
   # by adding simone to sudoers, it can bypass the sudo password prompt
+  # add remote_user = simone to ansible.cfg so onward ansible will try to conenct as simone
   - name: add simone to sudeors file
     copy:
       src: simone_file
