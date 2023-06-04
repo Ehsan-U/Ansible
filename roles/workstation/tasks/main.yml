@@ -1,0 +1,5 @@
+- name: install samba
+  # package-name for samba is same on centos & ubuntu
+  package:
+    name: samba
+    state: latest

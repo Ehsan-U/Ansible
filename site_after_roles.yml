@@ -1,0 +1,40 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: update centos nodes
+    yum:
+      # update_only will upgrade the installed packages on centos, equal to apt dist-upgrade
+      update_only: true
+      update_cache: true
+    when: ansible_distribution == "CentOS"
+
+  - name: update ubuntu nodes
+    apt:
+      upgrade: dist
+      update_cache: true
+    when: ansible_distribution == "Ubuntu"
+
+
+- hosts: web_servers
+  become: true
+  roles:
+    - web_servers
+
+
+- hosts: db_servers
+  become: true
+  roles:
+    - db_servers
+
+  
+
+- hosts: workstation
+  become: true
+  roles:
+    - workstation
+
+ 
+    
