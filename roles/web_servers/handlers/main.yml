@@ -1,0 +1,5 @@
+- name: apache_restart_handler
+  service:
+    name: "{{ apache_service }}"
+    state: restarted
+    enabled: true

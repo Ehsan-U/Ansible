@@ -1,15 +1,17 @@
-- name: install apache & php on centos
-  yum:
+- name: install apache & php
+  package:
     name:
-      - httpd
-      - php
+      - "{{ apache_package_name }}"
+      - "{{ php_package_name }}"
     state: latest
-  when: ansible_distribution == "CentOS"
 
-- name: install apache & php on ubuntu
-  apt:
-    name:
-      - apache2
-      - libapache2-mod-php
-    state: latest
+
+- name: change admin email in apache config
+  lineinfile:
+    path: /etc/apache2/sites-available/000-default.conf
+    regexp: '^ServerAdmin'
+    line: ServerAdmin eehsane@example.com
   when: ansible_distribution == "Ubuntu"
+  # its a variable, name can be anything
+  notify: apache_restart_handler
+
