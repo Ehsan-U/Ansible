@@ -1,0 +1,33 @@
+- name: adding user
+  tags: add_user
+  user:
+    name: simone
+    groups: root
+
+
+- name: add keys for user
+  tags: add_user_key
+  authorized_key:
+    user: simone
+    key: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBZD9+6g7Mv0PwNlNTAmY8U+y4vsWi9boga9hhnrGajK hp@pop-os'
+
+
+- name: add user to sudoers
+  tags: add_to_sudoers
+  copy:
+    src: simone_file
+    dest: /etc/sudoers.d/simone
+    owner: root
+    group: root
+    mode: 0440
+
+
+- name: generate sshd_config file
+  tags: ssh_config
+  template:
+    src: '{{ ssh_template_file }}'
+    dest: /etc/ssh/ssh_config
+    owner: root
+    group: root
+    mode: 0664
+  notify: restart_ssh
